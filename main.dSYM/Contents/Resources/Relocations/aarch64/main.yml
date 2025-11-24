@@ -1,0 +1,5 @@
+---
+triple:          'arm64-apple-darwin'
+binary-path:     '/Users/ans/Documents/Source/Graph-search/Graph-search/main'
+relocations:     []
+...

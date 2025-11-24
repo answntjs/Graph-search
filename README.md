@@ -13,7 +13,7 @@ C 또는 Java로 구현한다.
    - 토의사항
    - 기여도
 
-1. input1.txt
+1. input1.txt<br>
 input1.txt에 정의된 그래프 정보를 바탕으로 그래프 상의 모든 정점을 방문할 수 있는 두 가지 알고리즘인 DFS 및 BFS를 구현한다.
 
 input1.txt는 그래프를 다음과 같이 정의한다.
@@ -28,7 +28,7 @@ input1.txt는 그래프를 다음과 같이 정의한다.
 2 1
 ```
 
-2. input2.txt
+2. input2.txt<br>
 input2.txt에 정의된 그래프를 바탕으로 Dijkstra 알고리즘을 이용,
 각 정점을 방문하는 최단 거리 및 경로를 구한다.
 

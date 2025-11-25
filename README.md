@@ -1,3 +1,13 @@
+# 평가자 주의사항
+- 파일명을 "input1.txt"와 "input2.txt"로 정확하게 해주세요.
+- 파일 인코딩은 ANSI 또는 UTF-8(not BOM)으로 해주세요.
+- Visual Studio 2022 MSVC 컴파일러로 제작하였습니다.
+- Mac VSCode CLANG 호환 확인('25.11.26.)
+
+아래는 문제 정의입니다.
+
+---
+
 # Graph-search
 하나의 프로그램으로 구현, 요구사항을 수행한 후 종료.
 

@@ -11,7 +11,7 @@ void showGraph(unsigned int** matrix, unsigned int size);
 unsigned int** getMatrixfromFile(FILE* input, unsigned int* matrix_size, int mode);
 int charType(int c);
 void push(unsigned int* stk, char mode);
-void pop(unsigned int* stk char mode);
+unsigned int pop(unsigned int* stk char mode);
 
 int main() {
     

@@ -16,4 +16,4 @@ int charType(int);
 void push(unsigned int*, unsigned int, unsigned int, char);
 
 //배열에서 값을 꺼내옴; 's' for stack, 'q' for queue.
-unsigned int pop(unsigned int*, unsigned int, char);
+unsigned int pop(unsigned int*, char);

@@ -13,7 +13,7 @@ unsigned int** getMatrixfromFile(FILE*, unsigned int*, int);
 int charType(int); 
 
 //배열에 값을 저장함; 's' for stack, 'q' for queue.
-void push(unsigned int* stk, char mode);
+void push(unsigned int* stk, unsigned int value, char mode);
 
 //배열에서 값을 꺼내옴; 's' for stack, 'q' for queue.
 unsigned int pop(unsigned int* stk char mode);

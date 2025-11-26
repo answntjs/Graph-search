@@ -11,7 +11,7 @@ void showGraph(unsigned int** matrix, unsigned int size);
 unsigned int** getMatrixfromFile(FILE* input, unsigned int* matrix_size, int mode);
 int charType(int c);
 void push(unsigned int* stk, unsigned int size, unsigned int value, char mode);
-unsigned int pop(unsigned int* stk, unsigned int size, char mode);
+unsigned int pop(unsigned int* stk, char mode);
 
 int main() {
     
@@ -37,10 +37,15 @@ int main() {
 		//방문하면 0에서 1로 바꿈
 		int* visited = (int*)calloc(matrix_size, sizeof(int));
 
-		//정점 번호 넣으셈
+		//정점 번호 넣으면됨
+		//!!오버플로 주의!!
+		//구리면 바꾸거나 지워도됨
+		//stack[0], queue[0]은 pop으로 나가는 값의 index
+		//ex) stack = {3, 2, 3, 4}; //2, 3, 4 순서대로 push됐고 4, 3, 2 순서대로 pop됨
+		//ex) queue = {4, 1, 2, 3, 4} //4, 3, 2, 1 순서대로 push됐고 4, 3, 2, 1 순서대로 pop됨
 		//push, pop 함수 쓰면됨
-		unsigned int* stack = (unsigned int*)calloc(matrix_size, sizeof(unsigned int));
-		unsigned int* queue = (unsigned int*)calloc(matrix_size, sizeof(unsigned int));
+		unsigned int* stack = (unsigned int*)calloc(matrix_size+1, sizeof(unsigned int));
+		unsigned int* queue = (unsigned int*)calloc(matrix_size+1, sizeof(unsigned int));
 
 		
 		

@@ -33,14 +33,14 @@ unsigned int** getMatrixfromFile(FILE* input, unsigned int* matrix_size, int mod
     unsigned int size, row, col, oddeven, weight;
     int c;
 
-    //Çà·Ä Å©±â È®ÀÎ
+    //í–‰ë ¬ í¬ê¸° í™•ì¸
     if (fscanf(input, "%u", &size) != 1) return NULL;
     *matrix_size = size;
-    if (size == 0) return NULL;        //ÀÚ·á±¸Á¶»ó 0ÀÌ ³ª¿Ã¼ö ¾ø¾î¼­ 0 ³ª¿À¸é ÆÄÀÏÀÌ ºñ¾îÀÖ´Â°Å¶ó°í °£ÁÖÇÔ
+    if (size == 0) return NULL;        //ìë£Œêµ¬ì¡°ìƒ 0ì´ ë‚˜ì˜¬ìˆ˜ ì—†ì–´ì„œ 0 ë‚˜ì˜¤ë©´ íŒŒì¼ì´ ë¹„ì–´ìˆëŠ”ê±°ë¼ê³  ê°„ì£¼í•¨
 
     while ((c = fgetc(input)) != EOF && c != '\n');
 
-    //Çà·Ä ¸Ş¸ğ¸® µ¿ÀûÇÒ´ç
+    //í–‰ë ¬ ë©”ëª¨ë¦¬ ë™ì í• ë‹¹
     matrix = (unsigned int**)malloc(sizeof(unsigned int*) * size);
     if (!matrix) {
         printf("Error: memory allocation: matrix.\n");
@@ -93,3 +93,47 @@ unsigned int** getMatrixfromFile(FILE* input, unsigned int* matrix_size, int mod
     }
     return matrix;
 }
+
+void push(unsigned int* data, unsigned int size, unsigned int value, char mode){
+    if(*data >= size) return;
+    if(mode == 's'){
+        *(data+(*data)+1) = value;
+        (*data)++;
+    }else if(mode == 'q'){
+        if(*data > 0) memmove(data+2, data+1, *data*sizeof(unsigned int));
+        data[1] = value;
+        (*data)++;
+    }else return;
+}
+
+unsigned int pop(unsigned int* data, char mode){
+    if(*data == 0) return 0;
+    unsigned int r = *(data+(*data));
+    (*data)--;
+    return r;
+}
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

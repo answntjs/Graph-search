@@ -1,19 +1,21 @@
 #include "header.h"
 
 /*
-ÀÎÁ¢Çà·ÄÀÇ ÃÖ´ëÅ©±â´Â unsigned int¸¸Å­
-°Å¸®´Â unsigned int ¸¸Å­
-ÀÎÁ¢Çà·ÄÀÇ ¿ø¼Ò´Â °Å¸®¸¦ ÀÇ¹ÌÇÔ
-input1.txtÀÇ °Å¸®´Â 1·Î °íÁ¤
+ì¸ì ‘í–‰ë ¬ì˜ ìµœëŒ€í¬ê¸°ëŠ” unsigned intë§Œí¼
+ê±°ë¦¬ëŠ” unsigned int ë§Œí¼
+ì¸ì ‘í–‰ë ¬ì˜ ì›ì†ŒëŠ” ê±°ë¦¬ë¥¼ ì˜ë¯¸í•¨
+input1.txtì˜ ê±°ë¦¬ëŠ” 1ë¡œ ê³ ì •
 */
 
 void showGraph(unsigned int** matrix, unsigned int size);
 unsigned int** getMatrixfromFile(FILE* input, unsigned int* matrix_size, int mode);
 int charType(int c);
+void push(unsigned int* stk, char mode);
+void pop(unsigned int* stk char mode);
 
 int main() {
     
-	//input1.txt Ã³¸®
+	//input1.txt ì²˜ë¦¬
     printf("1. DFS / BFS\n\n");
 
     FILE* input1 = fopen("input1.txt", "r");
@@ -31,16 +33,31 @@ int main() {
 
 		matrix1 = getMatrixfromFile(input1, &matrix_size, 1);
         if (matrix_size == 0) break;
-        
+
+		//ë°©ë¬¸í•˜ë©´ 0ì—ì„œ 1ë¡œ ë°”ê¿ˆ
+		int* visited = (int*)calloc(matrix_size, sizeof(int));
+
+		//ì •ì  ë²ˆí˜¸ ë„£ìœ¼ì…ˆ
+		//push, pop í•¨ìˆ˜ ì“°ë©´ë¨
+		unsigned int* stack = (unsigned int*)calloc(matrix_size, sizeof(unsigned int));
+		unsigned int* queue = (unsigned int*)calloc(matrix_size, sizeof(unsigned int));
+
+		
+		
         printf("Graph [%d]:\n", graph_num);
         showGraph(matrix1, matrix_size);
 
+
+		
+
+		
         /*
-        ¿©±â¿¡ 1¹ø ¹®Á¦ ÀÛ¼º
-        matrix1¿¡ °¢ ±×·¡ÇÁ¸¦ ¼øÂ÷ÀûÀ¸·Î ÀúÀåÇÏ°í
-        °¢°¢ Ãâ·ÂÇÏ´Â ¹æ½ÄÀÓ
-        Áï ÇÑ ±×·¡ÇÁ¿¡ ´ëÇÑ dfs ¹× bfs ¼öÇà ÈÄ Ãâ·ÂÇÏ¸é µÊ
+        ì—¬ê¸°ì— 1ë²ˆ ë¬¸ì œ ì‘ì„±
+        matrix1ì— ê° ê·¸ë˜í”„ë¥¼ ìˆœì°¨ì ìœ¼ë¡œ ì €ì¥í•˜ê³ 
+        ê°ê° ì¶œë ¥í•˜ëŠ” ë°©ì‹ì„
+        ì¦‰ í•œ ê·¸ë˜í”„ì— ëŒ€í•œ dfs ë° bfs ìˆ˜í–‰ í›„ ì¶œë ¥í•˜ë©´ ë¨
         */
+		
         if (matrix1) {
             for (unsigned int i = 0; i < matrix_size; i++) {
                 free(*(matrix1 + i));
@@ -68,7 +85,7 @@ int main() {
 
 
 
-    //input2.txt Ã³¸®
+    //input2.txt ì²˜ë¦¬
     printf("2. Dijkstra\n\n");
 
     FILE* input2 = fopen("input2.txt", "r");
@@ -90,11 +107,12 @@ int main() {
         showGraph(matrix2, matrix_size);
 
         /*
-        ¿©±â¿¡ 1¹ø ¹®Á¦ ÀÛ¼º
-        matrix1¿¡ °¢ ±×·¡ÇÁ¸¦ ¼øÂ÷ÀûÀ¸·Î ÀúÀåÇÏ°í
-        °¢°¢ Ãâ·ÂÇÏ´Â ¹æ½ÄÀÓ
-        Áï ÇÑ ±×·¡ÇÁ¿¡ ´ëÇÑ dfs ¹× bfs ¼öÇà ÈÄ Ãâ·ÂÇÏ¸é µÊ
+        ì—¬ê¸°ì— 2ë²ˆ ë¬¸ì œ ì‘ì„±
+        matrix1ì— ê° ê·¸ë˜í”„ë¥¼ ìˆœì°¨ì ìœ¼ë¡œ ì €ì¥í•˜ê³ 
+        ê°ê° ì¶œë ¥í•˜ëŠ” ë°©ì‹ì„
+        ì¦‰ í•œ ê·¸ë˜í”„ì— ëŒ€í•œ ê²½ë¡œ ë° ê¸¸ì´ ì¶œë ¥í•˜ë©´ ë¨
         */
+		
         if (matrix2) {
             for (unsigned int i = 0; i < matrix_size; i++) {
                 free(*(matrix2 + i));

@@ -3,11 +3,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-//ÀÎÁ¢Çà·Ä Ãâ·Â
+//ì¸ì ‘í–‰ë ¬ ì¶œë ¥
 void showGraph(unsigned int** matrix, unsigned int size); 
 
-//µ¿ÀûÇÒ´ç ÈÄ ÆÄÀÏ ³»¿ë¿¡ µû¶ó ÀÎÁ¢Çà·ÄÀ» 1°³ »ı¼º ÈÄ Çà·Ä°ú ±× Å©±â¸¦ ¹İÈ¯
+//ë™ì í• ë‹¹ í›„ íŒŒì¼ ë‚´ìš©ì— ë”°ë¼ ì¸ì ‘í–‰ë ¬ì„ 1ê°œ ìƒì„± í›„ í–‰ë ¬ê³¼ ê·¸ í¬ê¸°ë¥¼ ë°˜í™˜
 unsigned int** getMatrixfromFile(FILE*, unsigned int*, int); 
 
-//ÇØ´ç ¹®ÀÚÀÇ Å¸ÀÔÀ» ¹İÈ¯(¼ıÀÚ, ¿µ¹®, °ø¹é, ±âÅ¸)
+//í•´ë‹¹ ë¬¸ìì˜ íƒ€ì…ì„ ë°˜í™˜(ìˆ«ì, ì˜ë¬¸, ê³µë°±, ê¸°íƒ€)
 int charType(int); 
+
+//ë°°ì—´ì— ê°’ì„ ì €ì¥í•¨; 's' for stack, 'q' for queue.
+void push(unsigned int* stk, char mode);
+
+//ë°°ì—´ì—ì„œ ê°’ì„ êº¼ë‚´ì˜´; 's' for stack, 'q' for queue.
+unsigned int pop(unsigned int* stk char mode);

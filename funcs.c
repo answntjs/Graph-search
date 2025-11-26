@@ -1,0 +1,95 @@
+#include "header.h"
+
+void showGraph(unsigned int** matrix, unsigned int size) {
+    for (unsigned int i = 0; i < size; i++) {
+        for (unsigned int j = 0; j < size; j++) {
+            printf("%u ", matrix[i][j]);
+        }
+        printf("\n");
+    }
+    printf("\n");
+}
+
+int charType(int c) {
+    if (c >= '0' && c <= '9') {
+        return 1;
+    }
+    else if (c >= 'A' && c <= 'Z') {
+        return 2;
+    }
+    else if (c >= 'a' && c <= 'z') {
+        return 2;
+    }
+    else if (c == ' ') {
+        return 3;
+    }
+    else {
+        return 0;
+    }
+}
+
+unsigned int** getMatrixfromFile(FILE* input, unsigned int* matrix_size, int mode) {
+    unsigned int** matrix = NULL;
+    unsigned int size, row, col, oddeven, weight;
+    int c;
+
+    //행렬 크기 확인
+    if (fscanf(input, "%u", &size) != 1) return NULL;
+    *matrix_size = size;
+    if (size == 0) return NULL;        //자료구조상 0이 나올수 없어서 0 나오면 파일이 비어있는거라고 간주함
+
+    while ((c = fgetc(input)) != EOF && c != '\n');
+
+    //행렬 메모리 동적할당
+    matrix = (unsigned int**)malloc(sizeof(unsigned int*) * size);
+    if (!matrix) {
+        printf("Error: memory allocation: matrix.\n");
+        return NULL;
+    }
+    for (unsigned int i = 0; i < size; i++) {
+        *(matrix + i) = (unsigned int*)calloc(size, sizeof(unsigned int));
+        if (!*(matrix + i)) {
+            printf("Error: memory allocation: matrix[%u].\n", i);
+            return NULL;
+        }
+    }
+
+    for (unsigned int i = 0; i < size; i++) {
+        oddeven = 0;
+
+        while (1) {
+            c = fgetc(input);
+            if (c == EOF) return matrix;
+            if (c == '\n') break;
+            if (charType(c) == 3) continue;
+            if (charType(c) == 1) {
+                ungetc(c, input);
+                unsigned int num;
+                if (fscanf(input, "%u", &num) == 1) {
+                    if (!oddeven) {
+                        row = num - 1;
+                    }
+                    else {
+                        if (mode == 1) {
+                            col = num - 1;
+                            if (row < size && col < size) matrix[row][col] = 1;
+                        }
+                        else {
+                            if (oddeven % 2) {
+                                col = num - 1;
+                            }
+                            else {
+                                weight = num;
+                                if (row < size && col < size) {
+                                    matrix[row][col] = weight;
+                                }
+                            }
+                        }
+                    }
+                    oddeven++;
+                }
+            }
+        }
+    }
+    return matrix;
+}

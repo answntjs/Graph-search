@@ -113,6 +113,100 @@ unsigned int pop(unsigned int* data, char mode){
     return r;
 }
 
+void dfs(unsigned int** matrix, unsigned int size, int* visited, unsigned int* stack) {
+    //  초기화
+    for (unsigned int i = 0; i < size; i++) {
+        visited[i] = 0;
+    }
+    for (unsigned int i = 0; i <= size; i++) {
+        stack[i] = 0;
+    }
+
+    // 시작 정점 push
+    push(stack, size + 1, 1, 's');
+
+    unsigned int visit_count = 0;
+
+    // DFS
+    while (1) {
+        unsigned int v = pop(stack, 's');
+
+        // pop 결과 0이면 break
+        if (v == 0) break;
+
+        unsigned int idx = v - 1;
+
+        // 방문한 정점이면 comtinue
+        if (visited[idx]) continue;
+
+        // 방문 표시
+        visited[idx] = 1;
+
+        // 방문 순서
+        if (visit_count == 0) {
+            // 첫 번째 정점
+            printf("%u", v);
+        }
+        else {
+            // 그 이후 정점
+            printf(" - %u", v);
+        }
+        visit_count++;
+
+        // 인접 정점 push
+        // 작은 번호 먼저 방문
+        for (int w = (int)size; w >= 1; w--) {
+            if (matrix[idx][w - 1] != 0 && !visited[w - 1]) {
+                // v 와 w 가 인접, 방문하지 않은 경우
+                push(stack, size + 1, (unsigned int)w, 's');
+            }
+        }
+    }
+    printf("\n");
+}
+
+void bfs(unsigned int** matrix, unsigned int size, int* visited, unsigned int* queue) {
+    // 초기화
+    for (unsigned int i = 0; i < size; i++) {
+        visited[i] = 0;
+    }
+    for (unsigned int i = 0; i <= size; i++) {
+        queue[i] = 0;
+    }
+
+    // 시작 정점 enqueue
+    push(queue, size + 1, 1, 'q');
+    visited[0] = 1;      // BFS는 enqueue 시점에 방문 표시
+
+    unsigned int visit_count = 0;
+
+    while (1) {
+        unsigned int v = pop(queue, 'q');    // dequeue
+
+        if (v == 0) break;
+
+        unsigned int idx = v - 1;
+
+        // 출력
+        if (visit_count == 0) {
+            printf("%u", v);
+        }
+        else {
+            printf(" - %u", v);
+        }
+        visit_count++;
+
+        // 인접 정점 탐색
+        for (unsigned int w = 1; w <= size; w++) {
+            if (matrix[idx][w - 1] != 0 && !visited[w - 1]) {
+                push(queue, size + 1, w, 'q');
+                visited[w - 1] = 1;   // enqueue 시 방문 체크
+            }
+        }
+    }
+    printf("\n");
+}
+
 
     
 

@@ -1,0 +1,51 @@
+//!!! 랜덤 그래프 생성기 !!!
+//재미로 만듬 ㅋ
+//by leesh200303-ai
+
+
+
+
+
+
+
+
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+
+#define NODES 99
+
+
+int main() {
+    int n = NODES; // 정점 개수
+    FILE* fp = fopen("graph.txt", "w");
+    if (fp == NULL) {
+        printf("파일을 열 수 없습니다.\n");
+        return 1;
+    }
+
+    srand(time(NULL)); // 랜덤 시드 설정
+
+    // 첫 줄: 정점 개수
+    fprintf(fp, "%d\n", n);
+
+    // 각 정점에 대해 랜덤 연결 생성
+    for (int i = 1; i <= n; i++) {
+        fprintf(fp, "%d", i);
+
+        // 1 ~ 80개의 랜덤 연결
+        int edges = rand() % 80 + 1;
+
+        for (int j = 0; j < edges; j++) {
+            int target = rand() % n + 1;
+            if (target != i) { // 자기 자신 제외
+                fprintf(fp, " %d", target);
+            }
+        }
+        fprintf(fp, "\n");
+    }
+
+    fclose(fp);
+    printf("graph.txt 파일에 그래프가 저장되었습니다.\n");
+    return 0;
+}

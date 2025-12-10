@@ -4,6 +4,7 @@
 #include <string.h>
 
 #define PATH_MAX 512 //문제 내에서 path 최대사이즈는 (3+1+1)*99<512
+#include <limits.h> // INT_MAX를 사용할 경우 필요 (현재는 상수값 2147483647 사용)
 
 //Struct for Dijkstra path and distance; by leesh200303-ai
 struct MatrixMap{

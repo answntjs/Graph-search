@@ -3,12 +3,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#define SIZE_MAX 512 //문제 내에서 path 최대사이즈는 (3+1+1)*99<512
+#define PATH_MAX 512 //문제 내에서 path 최대사이즈는 (3+1+1)*99<512
 
 //Struct for Dijkstra path and distance; by leesh200303-ai
 struct MatrixMap{
-	char path[SIZE_MAX];
-	unsigned int distance;
+	char path[PATH_MAX];
+	int distance;
+	int is_visited;
+
 };
 
 //인접행렬 출력

@@ -3,6 +3,7 @@
 - 파일 인코딩은 ANSI 또는 UTF-8(not BOM)으로 해주세요.
 - generator.c는 별도의 파일입니다. 빌드에서 반드시 제외해주세요.
 - Visual Studio 2022 MSVC 컴파일러로 제작하였습니다.
+- 제출한 거랑 아주 살짝 차이있음; 구동시 차이 없음(include 위치 변경)
 
 문주선(answntjs), 이성혁(leesh200303-ai), 우민재(allpe1025), -김지민(불참)
 

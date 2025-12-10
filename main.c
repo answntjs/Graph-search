@@ -2,7 +2,7 @@
 
 /*
 인접행렬의 최대크기는 unsigned int만큼
-거리는 unsigned int 만큼
+거리는 int 만큼 (다익스트라에서 -1을 무한대로 사용하기 위해 signed int로 가정)
 인접행렬의 원소는 거리를 의미함
 input1.txt의 거리는 1로 고정
 */
@@ -128,45 +128,93 @@ int main() {
             각각 출력하는 방식임
             즉 한 그래프에 대한 경로 및 길이 출력하면 됨
             */
-            //Dijkstra 알고리즘 수행 by leesh200303-ai
+            
 
-            //map2 초기화
+            //map2 초기화 및 할당
             struct MatrixMap* map2;
             map2 = (struct MatrixMap*)malloc(sizeof(struct MatrixMap) * matrix_size);
+            if (map2 == NULL) {
+                printf("Error: 메모리 할당 실패 (map2).\n");
+                // matrix2 메모리 해제
+                if (matrix2) {
+                    for (unsigned int i = 0; i < matrix_size; i++) {
+                        free(*(matrix2 + i));
+                    }
+                    free(matrix2);
+                }
+                fclose(input2);
+                return 1;
+            }
 
+            // 1. map2 초기화 (distance와 is_visited 필드 사용)
             for (unsigned int i = 0; i < matrix_size; i++) {
+                map2[i].is_visited = 0; 
                 strcpy(map2[i].path, "1");
-                map2[i].distance = 0;
-
+                if (i == 0) {
+                    map2[i].distance = 0; // 시작점은 0
+                }
+                else {
+                    map2[i].distance = -1; // 도달 불가능은 -1
+                }
             }
 
 
-            for (int i = 0; i < matrix_size; i++) {
-                for (int j = 0; j < matrix_size; j++) {
-                    if (matrix2[i][j] != 0) {
-                        if (map2[j].distance == 0 || map2[j].distance > map2[i].distance + matrix2[i][j]) {
-                            map2[j].distance = map2[i].distance + matrix2[i][j];
-                            //경로 갱신
-                            strcpy(map2[j].path, map2[i].path);
-                            char buffer[10];
-                            sprintf(buffer, " - %d", j + 1);
-                            strcat(map2[j].path, buffer);
-                        }
+            // 2. 다익스트라 메인 로직 
+         
+            for (unsigned int count = 0; count < matrix_size; count++) {
 
+                // 2-1. 최소 거리 노드 (u) 선택 단계
+                int u = -1;
+                int min_dist = 2147483647; // INT_MAX (충분히 큰 양수)
+
+                for (unsigned int i = 0; i < matrix_size; i++) {
+                    // 미방문 (!map2[i].is_visited), 도달 가능 (-1 아님), 최소 거리일 때
+                    if (!map2[i].is_visited && map2[i].distance != -1 && map2[i].distance < min_dist) {
+                        min_dist = map2[i].distance;
+                        u = i;
                     }
                 }
 
+                // 2-2. 종료 조건 및 방문 처리
+                if (u == -1) {
+                    break;
+                }
+                map2[u].is_visited = 1; // 방문 처리
+
+                // 2-3. 거리 갱신 (Relaxation) 단계
+                for (unsigned int v = 0; v < matrix_size; v++) {
+
+                    // u에서 v로 가는 간선이 존재하고, v가 미방문 노드일 때
+                    if (!map2[v].is_visited && matrix2[u][v] != 0) {
+
+                        int weight = matrix2[u][v];
+                        int new_dist = map2[u].distance + weight;
+
+                        // v가 도달 불가능(-1)이거나, u를 거치는 경로가 더 짧다면 갱신
+                        if (map2[v].distance == -1 || new_dist < map2[v].distance) {
+                            map2[v].distance = new_dist;
+
+                            // 경로 갱신
+                            strcpy(map2[v].path, map2[u].path);
+                            char buffer[10];
+                            sprintf(buffer, " - %d", v + 1);
+                            strcat(map2[v].path, buffer);
+                        }
+                    }
+                }
             }
+
+
             //결과 출력
             printf("-----------------------------------\n");
             printf("StartingPoint: 1\n");
             for (unsigned int i = 1; i < matrix_size; i++) {
-                if (map2[i].distance == 0) {
+                if (map2[i].distance == -1) { // 도달 불가능 조건 -1로 체크
                     printf("Vertex [%d]: null\n", i + 1);
 
                 }
                 else {
-                    printf("Vertex [%d]: %s, Distance: %u\n", i + 1, map2[i].path, map2[i].distance);
+                    printf("Vertex [%d]: %s, Distance: %d\n", i + 1, map2[i].path, map2[i].distance); 
                 }
 
             }

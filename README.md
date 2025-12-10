@@ -3,9 +3,8 @@
 - 파일 인코딩은 ANSI 또는 UTF-8(not BOM)으로 해주세요.
 - generator.c는 별도의 파일입니다. 빌드에서 반드시 제외해주세요.
 - Visual Studio 2022 MSVC 컴파일러로 제작하였습니다.
-- Mac VSCode Clang 호환 확인('25.11.26.)
 
-문주선, 이성혁, 우민재, -김지민(불참)
+문주선(answntjs), 이성혁(leesh200303-ai), 우민재(allpe1025), -김지민(불참)
 
 아래는 문제 정의입니다.
 
